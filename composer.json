@@ -1,0 +1,9 @@
+{
+    "name": "liushoukun/laravel-helpers",
+    "autoload": {
+        "psr-4": {
+            "Liushoukun\\LaravelHelpers\\": "src/"
+        }
+    },
+    "require": {}
+}
