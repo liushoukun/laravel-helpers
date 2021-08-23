@@ -8,12 +8,12 @@ trait ResponseJson
 {
 
     /**
-     * @param array $data
+     * @param mixed|null $data
      * @param string $message
      * @param int $status_code
      * @return JsonResponse
      */
-    public function success(array $data = [], string $message = 'success', int $status_code = 200)
+    public function success($data = null, string $message = 'success', int $status_code = 200)
     {
         return self::responseJson(0, $message, $status_code, $data, []);
     }
@@ -22,11 +22,11 @@ trait ResponseJson
      * @param int $code
      * @param string $message
      * @param int $status_code
-     * @param array|null $data
+     * @param mixed|null $data
      * @param array $errors
      * @return JsonResponse
      */
-    protected static function responseJson(int $code, string $message, int $status_code, array $data = null, array $errors = [])
+    protected static function responseJson(int $code, string $message, int $status_code, $data = null, array $errors = [])
     {
         $data = [
             'code'        => $code,
