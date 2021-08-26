@@ -33,6 +33,7 @@ trait ResponseJson
             'message'     => $message,
             'data'        => $data,
             'time'        => microtime(true) - LARAVEL_START,
+            'date'        => date('Y-m-d H:i:s'),
             'errors'      => $errors,
             'status_code' => $status_code,
 
