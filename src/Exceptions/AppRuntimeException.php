@@ -37,7 +37,7 @@ abstract class AppRuntimeException extends RuntimeException implements HttpExcep
     {
         $code = sprintf("%03d", $code);
 
-        $code              = (string)($this->getCodePrefix() .$code);
+        $code              = (string)($this->getCodePrefix() . $code);
         $this->status_code = $status_code;
         $this->code        = (int)($code);
         $this->message     = $this->getDefaultMessage($code, $message);
@@ -64,7 +64,7 @@ abstract class AppRuntimeException extends RuntimeException implements HttpExcep
 
     public function getErrors()
     {
-        return $this->errors;
+        return count($this->errors) > 0 ? $this->errors : null;
     }
 
     public function getData()
@@ -74,7 +74,7 @@ abstract class AppRuntimeException extends RuntimeException implements HttpExcep
 
     public function errors()
     {
-        return $this->errors;
+        return count($this->errors) > 0 ? $this->errors : null;
     }
 
     public function getHeaders()

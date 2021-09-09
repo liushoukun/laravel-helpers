@@ -39,6 +39,8 @@ class Handler extends ExceptionHandler
         $data            = [];
         $data['code']    = $e->getCode();
         $data['message'] = $this->isHttpException($e) ? $e->getMessage() : '服务器异常';
+        $data['time']    = bcsub(microtime(true), LARAVEL_START, 5);
+        $data['date']    = date('Y-m-d H:i:s');
         if ($e instanceof AppRuntimeException) {
             $data['message'] = $e->getMessage();
         }
@@ -48,22 +50,23 @@ class Handler extends ExceptionHandler
         if (method_exists($e, 'errors')) {
             $data['errors'] = $e->errors();
         }
-
-        if (config('app.debug')) {
-            $data['message']   = $e->getMessage();
-            $data['file']      = $e->getFile();
-            $data['line']      = $e->getLine();
-            $data['trace']     = collect($e->getTrace())->map(function ($trace) {
-                return Arr::except($trace, [ 'args' ]);
-            })->all();
-            $data['exception'] = get_class($e);
-        }
-        if (method_exists($e, 'data')) {
+        if (method_exists($e, 'getData')) {
             $data['data'] = $e->getData();
         } else {
             $data['data'] = null;
         }
-        $data['time'] = bcsub(microtime(true), LARAVEL_START, 5);
+
+        if (config('app.debug')) {
+            $data['debug']['message']   = $e->getMessage();
+            $data['debug']['file']      = $e->getFile();
+            $data['debug']['line']      = $e->getLine();
+            $data['debug']['exception'] = get_class($e);
+            $data['debug']['trace']     = collect($e->getTrace())->map(function ($trace) {
+                return Arr::except($trace, [ 'args' ]);
+            })->all();
+
+        }
+
         return $data;
 
 

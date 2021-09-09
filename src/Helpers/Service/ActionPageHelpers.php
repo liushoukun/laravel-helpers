@@ -23,6 +23,12 @@ class ActionPageHelpers implements Arrayable, Jsonable, \JsonSerializable
     public const  SIZE_SMALL  = 'small';
     public const  SIZE_MINI   = 'mini';
 
+    // 颜色类型
+    public const COLOR_TYPE_DEFAULT = 'default';
+    public const COLOR_TYPE_PRIMARY = 'primary';
+    public const COLOR_TYPE_INFO    = 'info';
+    public const COLOR_TYPE_WARNING = 'warning';
+    public const COLOR_TYPE_DANGER  = 'danger';
 
     protected $name;
     protected $label;
@@ -33,6 +39,7 @@ class ActionPageHelpers implements Arrayable, Jsonable, \JsonSerializable
     protected $size      = self::SIZE_NORMAL;
     protected $href      = null;
     protected $color     = null;
+    protected $colorType = self::COLOR_TYPE_DEFAULT;
     protected $icon      = null;
     protected $extend    = null;
     protected $tips      = null;
@@ -50,9 +57,11 @@ class ActionPageHelpers implements Arrayable, Jsonable, \JsonSerializable
      * @param string $format
      * @return $this
      */
-    public function countDown(bool $status = true, int $time = 0, string $format = 'mm分ss秒')
+    public function countDown(bool $status = true, int $time = 0, string $title = '', string $format = 'mm分ss秒')
     {
         $this->countDown = [
+            'title'  => $title,
+            'exp'    => now()->addSeconds($time)->toDateTimeString(),
             'status' => $status,
             'time'   => $time,
             'format' => $format,
@@ -189,6 +198,17 @@ class ActionPageHelpers implements Arrayable, Jsonable, \JsonSerializable
         return $this;
     }
 
+
+    /**
+     * @param string $colorType
+     * @return $this
+     */
+    public function colorType(string $colorType)
+    {
+        $this->colorType = $colorType;
+        return $this;
+    }
+
     /**
      * @param $icon
      * @return $this
@@ -263,11 +283,12 @@ class ActionPageHelpers implements Arrayable, Jsonable, \JsonSerializable
             'label'      => $this->label,// 显示
             'disabled'   => $this->disabled,// 禁用
             'underline'  => $this->underline, //下划线
-            'type'       => $this->type,// 操作类型 url button
+            'type'       => $this->type,// 操作类型 url action
             'style'      => $this->style,// 样式 text button icon
             'size'       => $this->size,//
             'href'       => $this->href,// 链接
             'color'      => $this->color,//颜色
+            'color_type' => $this->colorType,//颜色类型
             'icon'       => $this->icon,// 图标
             'tips'       => $this->tips,// 提示
             'confirm'    => $this->confirm,
