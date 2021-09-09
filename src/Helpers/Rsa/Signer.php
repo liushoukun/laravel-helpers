@@ -85,6 +85,7 @@ class Signer
         $privateKey = $this->format($privateKey, self::KEY_TYPE_PRIVATE);
         $res        = openssl_pkey_get_private($privateKey);
         $sign       = null;
+
         try {
             openssl_sign($content, $sign, $res, $alg);
         } catch (Exception $e) {
@@ -95,8 +96,13 @@ class Signer
             }
         }
 
-        openssl_free_key($res);
+        if (version_compare(8, PHP_VERSION) > 0) {
+            openssl_free_key($res);
+        }
+
         $sign = base64_encode($sign);
+
+
         return $sign;
     }
 
@@ -195,9 +201,9 @@ class Signer
         }
 
         $result = (bool)openssl_verify($content, base64_decode($sign), $res, $alg);
-
-        openssl_free_key($res);
-
+        if (version_compare(8, PHP_VERSION) > 0) {
+            openssl_free_key($res);
+        }
         return $result;
     }
 
