@@ -1,14 +1,28 @@
 <?php
-
-namespace Liushoukun\LaravelHelpers\Logs;
+namespace Liushoukun\LaravelHelpers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class LogSqlServiceProvider
+class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
 
-    public static function register()
+    /**
+     * Register services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+
+    /**
+     * Bootstrap services.
+     *
+     * @return void
+     */
+    public function boot()
     {
         if (app('config')->get('app.debug')) {
             DB::listen(function ($query) {

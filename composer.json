@@ -5,5 +5,15 @@
             "Liushoukun\\LaravelHelpers\\": "src/"
         }
     },
-    "require": {}
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Liushoukun\\LaravelHelpers\\ServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    }
 }
