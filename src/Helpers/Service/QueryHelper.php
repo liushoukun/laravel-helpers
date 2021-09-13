@@ -48,7 +48,7 @@ class QueryHelper
      * @param $field
      * @param $condition
      */
-    public static function times(Builder $query, $field, $condition, $timeType = 'day')
+    public static function times(Builder $query, $field, $condition, $timeType = 'd')
     {
 
         if (blank($condition)) {
@@ -63,17 +63,17 @@ class QueryHelper
         $start = $list[0] ?? null;
         $end   = $list[1] ?? null;
         // 存在开始时间
-
         if (filled($start)) {
             $start = Carbon::parse($start);
-            ($timeType === 'day') ? $start->startOfDay() : '';
+            ($timeType === 'd') ? $start->startOfDay() : ''; //日
+            ($timeType === 'm') ? $start->startOfMonth() : ''; // 月
             $start = $start->toDateTimeString();
             $query = $query->where($field, '>=', $start);
         }
-
         if (filled($end)) {
             $end = Carbon::parse($end);
-            ($timeType === 'day') ? $end->endOfDay() : '';
+            ($timeType === 'd') ? $end->endOfDay() : '';
+            ($timeType === 'm') ? $end->endOfMonth() : '';
             $end   = $end->toDateTimeString();
             $query = $query->where($field, '<=', $end);
         }
