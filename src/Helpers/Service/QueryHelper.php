@@ -20,6 +20,7 @@ class QueryHelper
         if (blank($condition)) {
             return $query;
         }
+        $list = [];
         if (is_array($condition)) {
             $list = $condition;
         }
