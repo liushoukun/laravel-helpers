@@ -21,8 +21,10 @@ class QueryHelper
             return $query;
         }
         $list = [];
-        if (is_array($condition)) {
+          if (is_array($condition)) {
             $list = $condition;
+        }else{
+            $condition = (string)$condition;
         }
         if (is_string($condition)) {
             $list = explode(',', $condition);
