@@ -15,7 +15,7 @@ class QueryHelper
      * @param $condition
      * @return Builder
      */
-    public static function array(Builder $query, $field, $condition)
+    public static function array(Builder $query, $field, $condition,$valueType = 'int')
     {
         if (blank($condition)) {
             return $query;
@@ -29,6 +29,21 @@ class QueryHelper
         $list = collect($list)->filter(function ($item) {
             return filled($item);
         });
+        $list = $list->map(function ($item) use($valueType){
+            switch ($valueType){
+                case 'int':
+
+                    return  (int)$item;
+                    break;
+                case 'string':
+                    return  (string)$item;
+                    break;
+                default:
+                 return   $item;
+                    break;
+            }
+        });
+
         $list = $list->values()->toArray();
         if (count($list) < 1) {
             return $query;

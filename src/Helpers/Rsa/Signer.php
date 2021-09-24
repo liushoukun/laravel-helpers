@@ -35,9 +35,12 @@ class Signer
     public function verifyRsa($data)
     {
         $sign = $data['sign'];
+
         $this->unsetKeys($data);
+
         $this->sort($data);
         $string = $this->getContentToSign($data);
+
         return $this->verifyWithRSA($string, $sign, $this->publicKey);
     }
 
