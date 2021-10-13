@@ -16,6 +16,15 @@ class Signer
 
     protected $encodePolicy = self::ENCODE_POLICY_QUERY;
 
+    /**
+     * @param string $encodePolicy
+     */
+    public function setEncodePolicy(string $encodePolicy) : void
+    {
+        $this->encodePolicy = $encodePolicy;
+    }
+
+
     public function __construct($publicKey = null, $privateKey = null)
     {
         $this->publicKey  = $publicKey;
