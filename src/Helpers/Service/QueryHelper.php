@@ -18,12 +18,12 @@ class QueryHelper
             $list  = explode(',', $value);
         }
         if (blank($list)) {
-            return $query;
+            return $list;
         }
         $list      = collect($list)->filter(function ($item) {
             return filled($item);
         });
-        $valueType = $valueType . 'val';
+        $valueType .= 'val';
         $list      = $list->map(function ($item) use ($valueType) {
             return ($valueType)($item);
         });
@@ -45,7 +45,7 @@ class QueryHelper
         return $query;
     }
 
-    public static function range(Builder $query, $field, $condition, $valueType = 'int')
+    public static function range(Builder $query, $field, $condition, $valueType = 'int') : Builder
     {
         if (blank($condition)) {
             return $query;
@@ -98,13 +98,13 @@ class QueryHelper
     }
 
     /**
-     * 构件查询器
      * @param Builder $query
      * @param $field
      * @param $condition
+     * @param string $valueType
      * @return Builder
      */
-    public static function array(Builder $query, $field, $condition, $valueType = 'int')
+    public static function array(Builder $query, $field, $condition,string $valueType = 'int') : Builder
     {
         if (blank($condition)) {
             return $query;
@@ -122,7 +122,7 @@ class QueryHelper
         $list      = collect($list)->filter(function ($item) {
             return filled($item);
         });
-        $valueType = $valueType . 'val';
+        $valueType .= 'val';
         $list      = $list->map(function ($item) use ($valueType) {
             return ($valueType)($item);
         });
@@ -133,7 +133,7 @@ class QueryHelper
         if (count($list) > 1) {
             $query = $query->whereIn($field, $list);
         }
-        if (count($list) == 1) {
+        if (count($list) === 1) {
             $query = $query->where($field, $list[0]);
         }
         return $query;
@@ -164,42 +164,51 @@ class QueryHelper
         return $query;
     }
 
+
     /**
-     * 时间构件器
+     * 时间查询
      * @param Builder $query
      * @param $field
      * @param $condition
+     * @param string $timeType
+     * @return Builder
      */
-    public static function times(Builder $query, $field, $condition, $timeType = 'd')
+    public static function times(Builder $query, $field, $condition,string $timeType = 'd')
     {
 
-        if (blank($condition)) {
+        try {
+            if (blank($condition)) {
+                return $query;
+            }
+            if (is_array($condition)) {
+                $list = $condition;
+            }
+            if (is_string($condition)) {
+                $list = explode(',', $condition);
+            }
+            $start = $list[0] ?? null;
+            $end   = $list[1] ?? null;
+            // 存在开始时间
+            if (filled($start)) {
+                $start = Carbon::parse($start);
+                ($timeType === 'd') ? $start->startOfDay() : ''; //日
+                ($timeType === 'm') ? $start->startOfMonth() : ''; // 月
+                $start = $start->toDateTimeString();
+                $query = $query->where($field, '>=', $start);
+            }
+            if (filled($end)) {
+                $end = Carbon::parse($end);
+                ($timeType === 'd') ? $end->endOfDay() : '';
+                ($timeType === 'm') ? $end->endOfMonth() : '';
+                $end   = $end->toDateTimeString();
+                $query = $query->where($field, '<=', $end);
+            }
+        }catch (\Throwable $throwable){
             return $query;
         }
-        if (is_array($condition)) {
-            $list = $condition;
-        }
-        if (is_string($condition)) {
-            $list = explode(',', $condition);
-        }
-        $start = $list[0] ?? null;
-        $end   = $list[1] ?? null;
-        // 存在开始时间
-        if (filled($start)) {
-            $start = Carbon::parse($start);
-            ($timeType === 'd') ? $start->startOfDay() : ''; //日
-            ($timeType === 'm') ? $start->startOfMonth() : ''; // 月
-            $start = $start->toDateTimeString();
-            $query = $query->where($field, '>=', $start);
-        }
-        if (filled($end)) {
-            $end = Carbon::parse($end);
-            ($timeType === 'd') ? $end->endOfDay() : '';
-            ($timeType === 'm') ? $end->endOfMonth() : '';
-            $end   = $end->toDateTimeString();
-            $query = $query->where($field, '<=', $end);
-        }
         return $query;
+
+
     }
 
     /**
