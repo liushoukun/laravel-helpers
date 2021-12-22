@@ -5,6 +5,28 @@ namespace Liushoukun\LaravelHelpers\Helpers\Data;
 class InputHelper
 {
 
+    public static function explode($value, string $valueType = 'int')
+    {
+        $list = [];
+        if (is_array($value)) {
+            $list = $value;
+        } else {
+            $value = (string)$value;
+            $list  = explode(',', $value);
+        }
+        if (blank($list)) {
+            return $list;
+        }
+        $list      = collect($list)->filter(function ($item) {
+            return filled($item);
+        });
+        $valueType .= 'val';
+        $list      = $list->map(function ($item) use ($valueType) {
+            return ($valueType)($item);
+        });
+        return $list->toArray();
+    }
+
     public static function toArray($data)
     {
         if (blank($data)) {
