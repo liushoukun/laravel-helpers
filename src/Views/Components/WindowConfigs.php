@@ -48,7 +48,7 @@ class WindowConfigs extends Component
     public function render()
     {
 
-        return view('laraavel-helpers::components.window-config', [ 'config' => $this->config,'keyName'=>$this->keyName]);
+        return view('laravel-helpers::components.window-config', [ 'config' => $this->config,'keyName'=>$this->keyName]);
     }
 
 }

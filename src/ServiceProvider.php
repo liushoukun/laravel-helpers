@@ -35,7 +35,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             });
         }
 
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'laraavel-helpers');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-helpers');
 
         $this->registerViewsComponents();
     }

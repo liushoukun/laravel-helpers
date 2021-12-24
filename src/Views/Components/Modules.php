@@ -4,6 +4,7 @@
 namespace Liushoukun\LaravelHelpers\Views\Components;
 
 
+use Illuminate\Support\Str;
 use Illuminate\View\Component;
 
 class Modules extends Component
@@ -35,6 +36,15 @@ class Modules extends Component
 
     }
 
+    public function cdn($file)
+    {
+        $domain = config('app.cdn_domain') ?? config('app.cdn_domain') ?? '';
+        $domain = Str::finish($domain, '/');
+        $domain = Str::start($domain, '//');
+        return $domain . $file;
+    }
+
+
     /**
      * Get the view / view contents that represent the component.
      *
@@ -42,7 +52,7 @@ class Modules extends Component
      */
     public function render()
     {
-        return view('laraavel-helpers::components.modules');
+        return view('laravel-helpers::components.modules');
     }
 
 
