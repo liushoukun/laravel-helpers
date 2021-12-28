@@ -20,8 +20,8 @@ class Modules extends Component
 
 
     public function __construct(string $path = '', string $div = 'app',
-                                array  $css = [ 'app', 'chunk-vendors' ],
-                                array  $js = [ 'app', 'chunk-vendors' ],
+                                array  $css = [  'chunk-vendors','app', ],
+                                array  $js = [  'chunk-vendors','app', ],
     )
     {
 

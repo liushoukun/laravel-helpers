@@ -6,6 +6,6 @@
 <div id="{{$div}}"></div>
 @if($js)
     @foreach($js as $name)
-        <script src="{{$cdn("{$path}/js/{$name}.js{$queryString}")}}"></script>
+        <script src="{{$cdn("{$path}/static/js/{$name}.js{$queryString}")}}"></script>
     @endforeach
 @endif
