@@ -4,8 +4,8 @@ namespace Liushoukun\LaravelHelpers;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Liushoukun\LaravelHelpers\Views\Components\Modules;
-use Liushoukun\LaravelHelpers\Views\Components\WindowConfigs;
+use Liushoukun\LaravelHelpers\Views\Components\ViewModules;
+use Liushoukun\LaravelHelpers\Views\Components\ViewWindowConfigs;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -46,8 +46,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function registerViewsComponents()
     {
-        Blade::component((Modules::class),'modules');
-        Blade::component((WindowConfigs::class),'window-configs');
+        Blade::component((ViewModules::class),'view-modules');
+        Blade::component((ViewWindowConfigs::class),'view-window-configs');
     }
 
 }
