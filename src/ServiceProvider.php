@@ -31,7 +31,17 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         if (app('config')->get('app.debug')) {
             DB::listen(function ($query) {
-                Log::channel('sql')->debug('sql:' . $query->sql . ';bindings:' . json_encode($query->bindings) . 'time:' . $query->time);
+
+
+                try {
+                    $sql = str_replace("?", "'%s'", $query->sql);
+                    $log = vsprintf($sql, $query->bindings??[]);
+                } catch (\Throwable $e) {
+                    $log = $query->sql;
+                }
+
+
+                Log::channel('sql')->debug('sql:'.$log.'time:' . $query->time);
             });
         }
 

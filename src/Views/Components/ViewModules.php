@@ -11,17 +11,19 @@ class ViewModules extends Component
 {
 
 
-    public string $path;
-    public string $div;
+    public string      $path;
+    public string      $div;
     public string|null $queryString = null;
 
-    public array $css = [ 'app', 'chunk-vendors' ];
-    public array $js  = [ 'app', 'chunk-vendors' ];
+    public array $css = [ 'chunk-vendors', 'app' ];
+    public array $js  = [ 'chunk-vendors', 'app', ];
 
 
-    public function __construct(string $path = '', string $div = 'app',
-                                array  $css = [  'chunk-vendors','app', ],
-                                array  $js = [  'chunk-vendors','app', ],
+    public function __construct(
+        string $path = '',
+        string $div = 'app',
+        array  $css = [ 'chunk-vendors', 'app', ],
+        array  $js = [ 'chunk-vendors', 'app', ],
     )
     {
 

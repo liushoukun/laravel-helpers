@@ -2,6 +2,7 @@
 
 namespace Liushoukun\LaravelHelpers\Helpers\Service;
 
+
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 
@@ -30,7 +31,13 @@ class QueryHelper
         return $list->toArray();
     }
 
-    public static function ranges(Builder $query, array $fields, array $conditions)
+    /**
+     * @param Builder|\Illuminate\Database\Query\Builder $query
+     * @param array $fields
+     * @param array $conditions
+     * @return Builder|\Illuminate\Database\Query\Builder
+     */
+    public static function ranges($query, array $fields, array $conditions)
     {
         foreach ($fields as $key => $value) {
             if (is_numeric($key)) {
@@ -45,7 +52,14 @@ class QueryHelper
         return $query;
     }
 
-    public static function range(Builder $query, $field, $condition, $valueType = 'int') : Builder
+    /**
+     * @param Builder|\Illuminate\Database\Query\Builder $query
+     * @param $field
+     * @param $condition
+     * @param string $valueType
+     * @return Builder|\Illuminate\Database\Query\Builder
+     */
+    public static function range($query, $field, $condition, $valueType = 'int')
     {
         if (blank($condition)) {
             return $query;
@@ -82,7 +96,13 @@ class QueryHelper
         return $query;
     }
 
-    public static function arrays(Builder $query, array $fields, array $conditions)
+    /**
+     * @param Builder|\Illuminate\Database\Query\Builder $query
+     * @param array $fields
+     * @param array $conditions
+     * @return Builder|\Illuminate\Database\Query\Builder|mixed
+     */
+    public static function arrays($query, array $fields, array $conditions)
     {
         foreach ($fields as $key => $value) {
             if (is_numeric($key)) {
@@ -98,13 +118,13 @@ class QueryHelper
     }
 
     /**
-     * @param Builder $query
+     * @param Builder|\Illuminate\Database\Query\Builder $query
      * @param $field
      * @param $condition
      * @param string $valueType
-     * @return Builder
+     * @return Builder|\Illuminate\Database\Query\Builder
      */
-    public static function array(Builder $query, $field, $condition,string $valueType = 'int') : Builder
+    public static function array($query, $field, $condition, string $valueType = 'int')
     {
         if (blank($condition)) {
             return $query;
@@ -141,12 +161,12 @@ class QueryHelper
 
     /**
      * 等于
-     * @param Builder $query
+     * @param Builder|\Illuminate\Database\Query\Builder $query
      * @param array $fields
      * @param array $conditions
-     * @return Builder
+     * @return Builder|\Illuminate\Database\Query\Builder
      */
-    public static function equals(Builder $query, array $fields, array $conditions)
+    public static function equals($query, array $fields, array $conditions)
     {
         foreach ($fields as $key => $value) {
             if (is_numeric($key)) {
@@ -167,13 +187,13 @@ class QueryHelper
 
     /**
      * 时间查询
-     * @param Builder $query
+     * @param Builder|\Illuminate\Database\Query\Builder $query
      * @param $field
      * @param $condition
      * @param string $timeType
-     * @return Builder
+     * @return Builder|\Illuminate\Database\Query\Builder
      */
-    public static function times(Builder $query, $field, $condition,string $timeType = 'd')
+    public static function times($query, $field, $condition, string $timeType = 'd')
     {
 
         try {
@@ -203,7 +223,7 @@ class QueryHelper
                 $end   = $end->toDateTimeString();
                 $query = $query->where($field, '<=', $end);
             }
-        }catch (\Throwable $throwable){
+        } catch (\Throwable $throwable) {
             return $query;
         }
         return $query;
@@ -213,17 +233,17 @@ class QueryHelper
 
     /**
      * 排序 多字段
-     * @param Builder $query
+     * @param Builder|\Illuminate\Database\Query\Builder $query
      * @param array $sorts
      * @param string $sort
-     * @return Builder
+     * @return Builder|\Illuminate\Database\Query\Builder
      */
-    public static function orderBy(Builder $query, array $sorts, string $sort = '')
+    public static function orderBy($query, array $sorts, string $sort = '')
     {
         $orderBuys = $sorts[$sort]['sorts'] ?? $sorts[$sort] ?? [];
 
         foreach ($orderBuys as $field => $type) {
-             $query = $query->orderBy($field, $type);
+            $query = $query->orderBy($field, $type);
         }
         return $query;
     }

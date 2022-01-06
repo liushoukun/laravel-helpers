@@ -3,9 +3,11 @@
         <link href="{{$cdn("{$path}/static/css/{$name}.css{$queryString}")}}" rel="stylesheet">
     @endforeach
 @endif
-<div id="{{$div}}"></div>
+@if($div)
+    <div id="{{$div}}"></div>
+@endif
 @if($js)
     @foreach($js as $name)
-        <script src="{{$cdn("{$path}/static/js/{$name}.js{$queryString}")}}"></script>
+        <script src="{{$cdn("{$path}/js/{$name}.js{$queryString}")}}"></script>
     @endforeach
 @endif
