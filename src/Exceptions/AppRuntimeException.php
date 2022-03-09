@@ -57,7 +57,7 @@ abstract class AppRuntimeException extends RuntimeException implements HttpExcep
     }
 
 
-    public function getStatusCode()
+    public function getStatusCode():int
     {
         return $this->status_code;
     }
@@ -77,7 +77,7 @@ abstract class AppRuntimeException extends RuntimeException implements HttpExcep
         return count($this->errors) > 0 ? $this->errors : null;
     }
 
-    public function getHeaders()
+    public function getHeaders():array
     {
         return $this->headers;
     }
