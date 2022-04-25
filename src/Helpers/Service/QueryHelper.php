@@ -206,8 +206,8 @@ class QueryHelper
             if (is_string($condition)) {
                 $list = explode(',', $condition);
             }
-            $start = $list[0] ?? null;
-            $end   = $list[1] ?? null;
+            $start = $list[0] ?? $list['start'] ?? null;
+            $end   = $list[1] ?? $list['end'] ?? null;
             // 存在开始时间
             if (filled($start)) {
                 $start = Carbon::parse($start);
